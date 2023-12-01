@@ -8,23 +8,16 @@ solution1 :: String -> Int
 solution1 s = sum $ do
   l <- lines s
   let ns = map (read . pure) $ filter isDigit l
-  pure $ (head ns * 10) + last ns
+  pure $ head ns * 10 + last ns
 
 solution2 :: String -> Int
 solution2 s = sum $ do
   l <- lines s
-  let ns = getNumbers l
+  let ns = mapMaybe (`lookup` digits) (tails l >>= inits)
   pure $ head ns * 10 + last ns
-
-getNumbers :: String -> [Int]
-getNumbers s =
-  let s' = tails s >>= inits
-   in mapMaybe (`lookup` digits) s'
-
-digits :: [(String, Int)]
-digits =
-  zip ds [0..] <> zip (map show [0..9 :: Int]) [0..]
   where
+    digits =
+      zip ds [0..] <> zip (map show [0..9 :: Int]) [0..]
     ds = 
       [ "zero", "one", "two", "three", "four"
       , "five", "six", "seven", "eight", "nine"]
