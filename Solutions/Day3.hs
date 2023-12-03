@@ -1,15 +1,16 @@
 module Solutions.Day3 (solution1, solution2) where
 
-import Data.List (groupBy)
+import Data.List (groupBy, transpose)
 import Data.Char (isDigit, isSpace)
 import Control.Monad (guard, mzero)
 import Text.Read (readMaybe)
-import Data.List.Extra (linesBy, nubOrd)
+import Data.List.Extra (linesBy, nubOrd, dropEnd)
 import qualified Data.Map.Strict as Map
+import Data.Maybe (catMaybes)
 
 solution1 :: String -> Int
 solution1 s = sum $ do
-  l <- adjacents $ linesPadded s
+  l <- adjacents $ lines s
   num <- groupBy (\(a,_) (b,_) -> isDigit a && isDigit b) l
   i <- maybe mzero pure (readMaybe (map fst num))
   guard $ any (any isSymbol' . snd) num
@@ -29,20 +30,17 @@ solution2 s = sum
       let numGears = nubOrd [fst n' | (_, n) <- num, n' <- n, n' `elem` gears]
       pure . Map.fromList $ map (,[i]) numGears
   where
-    s' = zip [0..] . unlines $ linesPadded s
+    s' = zip [0..] s
     gears = filter ((=='*') . snd) s'
-
-linesPadded :: String -> [String]
-linesPadded s = ([pad] ++) . (++ [pad]) . map ((++ ".") . ("." ++)) $ ls
-  where
-    ls = lines s
-    pad = replicate (length $ head ls) '.'
 
 adjacents :: [[a]] -> [[(a, [a])]]
 adjacents ls = do
-  (prev, l, next) <- adj ls
+  (l, adjs) <- adj ls
+  let adjs' = map adj adjs
   pure $ do
-    ((a,b,c),(d,e,f),(g,h,i)) <- zip3 (adj l) (adj prev) (adj next)
-    pure (b, [a,c,d,e,f,g,h,i])
+    ((c, r1), r2) <- zip (adj l) (transpose adjs')
+    pure (c, r1 ++ map fst r2 ++ concatMap snd r2)
   where
-    adj xs = zip3 xs (tail xs) (tail $ tail xs)
+    adj xs = 
+      let xs' = map Just xs
+       in zipWith3 (\a b c -> (a, catMaybes [b,c])) xs (Nothing : dropEnd 1 xs') (drop 1 xs' ++ [Nothing])
