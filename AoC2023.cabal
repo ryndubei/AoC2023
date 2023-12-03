@@ -19,9 +19,12 @@ library
     exposed-modules:
         Solutions.Day1
         Solutions.Day2
+        Solutions.Day3
     -- other-modules:
     -- other-extensions:
     build-depends:    
         base ^>=4.17.1.0
       , extra
+      , mtl
+      , containers
     default-language: GHC2021
