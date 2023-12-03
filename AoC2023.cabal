@@ -25,6 +25,5 @@ library
     build-depends:    
         base ^>=4.17.1.0
       , extra
-      , mtl
       , containers
     default-language: GHC2021
