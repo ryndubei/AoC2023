@@ -18,8 +18,10 @@ library
     import:           warnings
     exposed-modules:
         Solutions.Day1
+        Solutions.Day2
     -- other-modules:
     -- other-extensions:
     build-depends:    
         base ^>=4.17.1.0
+      , extra
     default-language: GHC2021
