@@ -20,10 +20,12 @@ library
         Solutions.Day1
         Solutions.Day2
         Solutions.Day3
+        Solutions.Day4
     -- other-modules:
     -- other-extensions:
     build-depends:    
         base ^>=4.17.1.0
       , extra
       , containers
+      , MemoTrie
     default-language: GHC2021
