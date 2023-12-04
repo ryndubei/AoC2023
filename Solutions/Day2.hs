@@ -1,4 +1,4 @@
-module Solutions.Day2 where
+module Solutions.Day2 (solution1, solution2) where
 
 import Control.Monad (guard)
 import Data.List.Extra (wordsBy)
