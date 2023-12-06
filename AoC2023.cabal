@@ -22,6 +22,7 @@ library
         Solutions.Day3
         Solutions.Day4
         Solutions.Day5
+        Solutions.Day6
     -- other-modules:
     -- other-extensions:
     build-depends:    
@@ -29,4 +30,5 @@ library
       , extra
       , containers
       , MemoTrie
+      --, raw-strings-qq
     default-language: GHC2021
