@@ -23,6 +23,7 @@ library
         Solutions.Day4
         Solutions.Day5
         Solutions.Day6
+        Solutions.Day7
     -- other-modules:
     -- other-extensions:
     build-depends:    
